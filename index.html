@@ -49,6 +49,8 @@
   </head>
   <body>
     <h1><a href='index.html'>Shape Generator</a></h1>
+    <h1 id='circle-count'></h1>
+    <h1 id="avg-size"></h1>
     <h2>Todos</h2>
     <ul>
       <li>Create a repo named shape-generator and add this index.html page</li>
@@ -68,7 +70,7 @@
     </ul>
     <a href='https://github.com/FullstackAcademy/shape-generator'>Repo</a>
     <form>
-      <input name='px' value='25'/>
+      <input type="number" min="25" max="250" name='px' value="25"/>
     </form>
     <div id='container'>
     </div>
@@ -77,26 +79,44 @@
       const input = form.querySelector('input');
       const link = document.querySelector('a');
       const container = document.querySelector('#container');
+      const circleAmount = document.querySelector('#circle-count');
+      const avgSize = document.querySelector('#avg-size');
 
       container.addEventListener('click', (ev)=>{
-        if(!ev.target.id){
-          ev.target.parentNode.removeChild(ev.target);
+        if (ev.target.tagName === 'SPAN') {
+          ev.target.parentElement.remove();
+        } else {
+          ev.target.parentNode.removeChild(ev.target)
         }
       });
+      
+      let circleCounter = [25];
 
-      const generateCircle = ()=> {
+      const generateCircle = () => {
         const size = `${input.value}px`;
         const circle = document.createElement('div');
+        const span = document.createElement('span');
+
         circle.style.width = size;
         circle.style.height = size;
+
+        if (Math.random() >= 0.5) {
+          circle.style.borderRadius = 0;
+        }
+
         container.appendChild(circle);
-        const span = document.createElement('span');
         span.innerText = input.value;
         circle.appendChild(span);
         input.value = 25 + Math.floor(Math.random()*50);
+
         window.setTimeout(function(){
           circle.classList.add('blue');
         }, 500);
+
+        circleAmount.innerText = `Circles amount: ${circleCounter.length}`;
+        console.log(circleCounter.reduce((total, elem) => total + elem));
+        avgSize.innerText = `Average circles size is ${Math.floor(circleCounter.reduce((total, elem) => total += elem) / circleCounter.length)}`;
+        circleCounter.push(Number(input.value));
       };
 
       form.addEventListener('submit', (ev)=> {
