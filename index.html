@@ -85,7 +85,8 @@
       container.addEventListener('click', (ev)=>{
         if (ev.target.tagName === 'SPAN') {
           ev.target.parentElement.remove();
-        } else {
+        }
+        if (ev.target.className === 'blue') {
           ev.target.parentNode.removeChild(ev.target)
         }
       });
@@ -114,7 +115,7 @@
         }, 500);
 
         circleAmount.innerText = `Circles amount: ${circleCounter.length}`;
-        console.log(circleCounter.reduce((total, elem) => total + elem));
+        // circleCounter.reduce((total, elem) => total + elem);
         avgSize.innerText = `Average circles size is ${Math.floor(circleCounter.reduce((total, elem) => total += elem) / circleCounter.length)}`;
         circleCounter.push(Number(input.value));
       };
