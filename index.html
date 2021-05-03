@@ -85,10 +85,15 @@
       container.addEventListener('click', (ev)=>{
         if (ev.target.tagName === 'SPAN') {
           ev.target.parentElement.remove();
+          console.log(ev.target.parentNode.id)
+          circleCounter.slice(Number(ev.target.parentNode.id), 0)
         }
         if (ev.target.className === 'blue') {
           ev.target.parentNode.removeChild(ev.target)
+          console.log(ev.target.id)
+          circleCounter.slice(Number(ev.target.id), 0)
         }
+        
       });
       
       let circleCounter = [25];
@@ -106,6 +111,7 @@
         }
 
         container.appendChild(circle);
+        circle.setAttribute('id', circleCounter.length -1);
         span.innerText = input.value;
         circle.appendChild(span);
         input.value = 25 + Math.floor(Math.random()*50);
